@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- by using embed query -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<style>
+  .wrapper {
+    width: 500px;
+    margin: 0 auto;
+  }
+
+  label {
+    font-size: 22px;
+    font-weight: bold;
+    float: left;
+    width: 130px;
+  }
+
+  input {
+    padding: 13px 5px;
+    width: 450px;
+    border-radius: 5px;
+    border: 1px solid #AAA;
+  }
+
+  .err {
+    color: red;
+    font-size: 22px;
+    width: 500px;
+    margin: 0 auto;
+  }
+
+  .succes {
+    color: green;
+    font-size: 27px;
+    width: 500px;
+    margin: 0 auto;
+  }
+</style>
+
+<body>
+  <div class="err"></div>
+  <div class="succes" style="display: none;">You did it</div>
+
+  <form class="wrapper">
+    <p><label for="email">Email</label>
+      <input type="email" id="email" placeholder="e.g example@gmail.com">
+    </p>
+
+    <p><label for="number">Phone</label>
+      <input type="text" id="number" placeholder="e.g 0301 1234567">
+    </p>
+
+    <p><label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter the password">
+    </p>
+
+    <p><label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" placeholder="Confirm Password">
+    </p>
+
+    <input type="submit" value="Submit" id="submit">
+  </form>
+  <script type="text/javascript">
+    function isEmail(email) {
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      return regex.test(email);
+    }
+    $("#submit").click(function (event) {
+      event.preventDefault();
+      var errMesg = '';
+      var missingFields = '';
+
+      if ($("#email").val() === '') {
+        missingFields += "<br>Email";
+      }
+      if ($("#number").val() === '') {
+        missingFields += "<br>Phone";
+      }
+      if ($("#password").val() === '') {
+        missingFields += "<br>Password";
+      }
+      if ($("#confirmPassword").val() === '') {
+        missingFields += "<br>Confirm Password";
+      }
+      if (missingFields !== "") {
+        errMesg += "The following fields are required:" + missingFields;
+      }
+      if (!isEmail($("#email").val())) {
+        errMesg += "<p>Enter a valid email</p>";
+      }
+      if (!$.isNumeric($("#number").val())) {
+        errMesg += "<p>Enter a valid phone</p>";
+      }
+      if ($("#password").val() !== $("#confirmPassword").val()) {
+        errMesg += "<p>Passwords do not match</p>";
+      }
+      if (errMesg !== '') {
+        $(".err").html(errMesg);
+        $(".succes").hide();
+      } else {
+        $(".err").html('');
+        $(".succes").show();
+      }
+    });
+  </script>
+</body>
+
+</html>
